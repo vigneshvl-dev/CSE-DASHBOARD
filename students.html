@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Directory — Hyna Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="main-wrapper">
+            <div id="navbar-container"></div>
+
+            <main class="content-body">
+                <!-- TOOLBAR BAR -->
+                <div class="card mb-4" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+                        <div class="global-search-bar" style="width: 320px;">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="student-search-input" placeholder="Search by name or register number..." onkeyup="renderStudentsDirectory()">
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <select id="student-filter-year" class="form-control" style="width: auto;" onchange="renderStudentsDirectory()">
+                                <option value="ALL">All Years</option>
+                                <option value="I">Year I</option>
+                                <option value="II">Year II</option>
+                                <option value="III">Year III</option>
+                                <option value="IV">Year IV</option>
+                            </select>
+
+                            <select id="student-filter-section" class="form-control" style="width: auto;" onchange="renderStudentsDirectory()">
+                                <option value="ALL">All Sections</option>
+                                <option value="A">Section A</option>
+                                <option value="B">Section B</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STUDENTS TABLE CARD -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-users text-primary"></i> CSE Department Student Roster</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Register No</th>
+                                    <th>Department</th>
+                                    <th>Year / Sec</th>
+                                    <th>Projects</th>
+                                    <th>Certificates</th>
+                                    <th>Internships</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                                <!-- Rendered dynamically by students.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- STUDENT PORTFOLIO PREVIEW MODAL -->
+    <div class="modal-backdrop" id="view-student-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Student Portfolio Summary</h3>
+                <button class="modal-close-btn" onclick="closeModal('view-student-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <h3 class="font-bold text-main text-xl mb-1" id="modal-student-name">Student Name</h3>
+                    <div class="text-muted text-sm" id="modal-student-reg">STU001 • Computer Science</div>
+                </div>
+
+                <div class="stat-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Projects</span>
+                            <div class="stat-value" id="modal-count-projects">0</div>
+                        </div>
+                        <i class="fa-solid fa-diagram-project text-primary font-xl"></i>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Certificates</span>
+                            <div class="stat-value" id="modal-count-certs">0</div>
+                        </div>
+                        <i class="fa-solid fa-certificate text-teal font-xl"></i>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Internships</span>
+                            <div class="stat-value" id="modal-count-interns">0</div>
+                        </div>
+                        <i class="fa-solid fa-briefcase text-purple font-xl"></i>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Achievements</span>
+                            <div class="stat-value" id="modal-count-achieve">0</div>
+                        </div>
+                        <i class="fa-solid fa-trophy text-amber font-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('view-student-modal')">Close</button>
+                <a href="student-profile.html" class="btn btn-primary">Open Full Portfolio</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/students.js"></script>
+</body>
+</html>

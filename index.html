@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stella Mary's College of Engineering — Hyna Studio</title>
+    <!-- Google Fonts & Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* FULL-WIDTH UNCORPPED COLLEGE LOGO HEADER BAR */
+        .college-header-bar {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .college-header-inner {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .college-logo-full {
+            width: 100%;
+            max-width: 980px;
+            height: auto;
+            max-height: 120px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .hero-section {
+            min-height: calc(100vh - 140px);
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            padding: 3rem 1.5rem;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 960px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            color: #4338ca;
+            padding: 0.5rem 1.35rem;
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 1.75rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            color: #0f172a;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: #475569;
+            max-width: 720px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        .role-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .role-access-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        .role-access-card:hover {
+            background: #f8fafc;
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.15);
+        }
+
+        .role-card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .role-card-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .role-card-desc {
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 640px) {
+            .role-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FULL-WIDTH COLLEGE BANNER HEADER BAR -->
+    <header class="college-header-bar">
+        <div class="college-header-inner">
+            <img src="stella_marys_logo.png" alt="Stella Mary's College of Engineering" class="college-logo-full">
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <img src="stella_marys_emblem.png" alt="Stella Mary's Emblem" style="width: 24px; height: 24px; object-fit: contain; vertical-align: middle; margin-right: 0.35rem;"> Department of Computer Science & Engineering
+            </div>
+
+            <h3 style="font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1rem; font-weight: 700;">
+                Select Portal Role to Access System
+            </h3>
+
+            <div class="role-cards-grid">
+                <div class="role-access-card" onclick="quickLoginAs('Student')">
+                    <div class="role-card-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <div class="role-card-title">Student</div>
+                    <div class="role-card-desc">Portfolio, Submissions & Hyna Hub</div>
+                </div>
+                <div class="role-access-card" onclick="quickLoginAs('Faculty')">
+                    <div class="role-card-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <div class="role-card-title">Faculty</div>
+                    <div class="role-card-desc">Verification Queue & Student Directory</div>
+                </div>
+                <div class="role-access-card" onclick="quickLoginAs('HOD/Admin')">
+                    <div class="role-card-icon"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="role-card-title">HOD / Admin</div>
+                    <div class="role-card-desc">Department Analytics & Reports</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS Core -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script>
+        function quickLoginAs(role) {
+            localStorage.setItem("hyna_selected_role", role);
+            if (window.addAuditLog) {
+                window.addAuditLog("Portal Access", `Logged in via quick access as ${role}`, "Success");
+            }
+            window.location.href = "student-dashboard.html";
+        }
+    </script>
+</body>
+</html>

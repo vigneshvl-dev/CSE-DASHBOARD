@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Search — Hyna Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .search-hero-bar {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-hero-bar input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.25rem;
+            font-size: 1.1rem;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-hero-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .search-hero-bar i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: var(--text-muted);
+        }
+
+        .tab-nav-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="main-wrapper">
+            <div id="navbar-container"></div>
+
+            <main class="content-body">
+                <!-- HERO SEARCH BAR -->
+                <div class="search-hero-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search-input" placeholder="Search across students, projects, certificates, internships..." onkeyup="performGlobalSearch()">
+                </div>
+
+                <!-- CATEGORY TABS -->
+                <div class="tab-nav-bar">
+                    <button class="tab-btn active" onclick="setGlobalSearchTab('ALL', this)">All Results</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('STUDENTS', this)">Students</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('PROJECTS', this)">Projects</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('CERTIFICATES', this)">Certificates</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('INTERNSHIPS', this)">Internships</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('ACHIEVEMENTS', this)">Achievements</button>
+                    <button class="tab-btn" onclick="setGlobalSearchTab('HYNA_HUB', this)">Hyna Hub</button>
+                </div>
+
+                <!-- RESULT HEADER -->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="text-muted text-sm font-semibold" id="search-results-count">Searching database...</div>
+                </div>
+
+                <!-- SEARCH RESULTS LIST -->
+                <div id="search-results-container">
+                    <!-- Rendered dynamically by search.js -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

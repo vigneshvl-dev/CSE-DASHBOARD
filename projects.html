@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Hyna Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="main-wrapper">
+            <div id="navbar-container"></div>
+
+            <main class="content-body">
+                <!-- TOOLBAR BAR -->
+                <div class="card mb-4" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 280px;">
+                            <div class="global-search-bar" style="width: 100%;">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="project-search-input" placeholder="Search projects by title, tech stack..." onkeyup="renderProjectsList()">
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <select id="project-filter-type" class="form-control" style="width: auto;" onchange="renderProjectsList()">
+                                <option value="ALL">All Types</option>
+                                <option value="Capstone Project">Capstone</option>
+                                <option value="Research Project">Research</option>
+                                <option value="Coursework Project">Coursework</option>
+                            </select>
+
+                            <select id="project-filter-status" class="form-control" style="width: auto;" onchange="renderProjectsList()">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Submitted">Submitted</option>
+                                <option value="Verified">Verified</option>
+                                <option value="Under Review">Under Review</option>
+                            </select>
+
+                            <button class="btn btn-primary" onclick="openModal('add-project-modal')">
+                                <i class="fa-solid fa-plus"></i> Add Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECTS GRID CONTAINER -->
+                <div id="projects-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Rendered dynamically by projects.js -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ADD PROJECT MODAL -->
+    <div class="modal-backdrop" id="add-project-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Submit New Project</h3>
+                <button class="modal-close-btn" onclick="closeModal('add-project-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-project-form" onsubmit="submitNewProject(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Project Title *</label>
+                        <input type="text" id="proj-title" class="form-control" placeholder="e.g. AI Emergency Dispatch System" required>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Project Type *</label>
+                            <select id="proj-type" class="form-control" required>
+                                <option value="Capstone Project">Capstone Project</option>
+                                <option value="Research Project">Research Project</option>
+                                <option value="Coursework Project">Coursework Project</option>
+                                <option value="Open Source">Open Source</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Technologies (Comma Separated) *</label>
+                            <input type="text" id="proj-tech" class="form-control" placeholder="JavaScript, Python, C++" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea id="proj-desc" class="form-control" rows="3" placeholder="Overview of features, architecture, and goals..." required></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">GitHub Repository URL</label>
+                            <input type="url" id="proj-github" class="form-control" placeholder="https://github.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Live Demo URL</label>
+                            <input type="url" id="proj-demo" class="form-control" placeholder="https://demo.hyna.edu">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Start Date *</label>
+                            <input type="date" id="proj-start" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">End Date</label>
+                            <input type="date" id="proj-end" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Team Members (Comma Separated)</label>
+                        <input type="text" id="proj-team" class="form-control" placeholder="Demo Student, Alex Rivera">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Evidence / Documentation Upload Simulator</label>
+                        <div class="file-dropzone-sim" onclick="document.getElementById('sim-file-input').click()">
+                            <i class="fa-solid fa-cloud-arrow-up text-primary" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <div class="font-semibold text-main text-sm">Click to simulate file upload</div>
+                            <div class="text-muted text-xs">PDF, ZIP, DOCX up to 25MB</div>
+                            <input type="file" id="sim-file-input" style="display: none;" onchange="handleFileSelectSimulated(this)">
+                        </div>
+                        <div id="file-sim-info" class="mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('add-project-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/projects.js"></script>
+</body>
+</html>

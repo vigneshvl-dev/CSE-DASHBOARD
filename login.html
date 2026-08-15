@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Hyna Studio (Stella Mary's College of Engineering)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: #ffffff;
+        }
+
+        .college-header-bar {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2.5rem;
+        }
+
+        .college-header-inner {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .college-logo-full {
+            width: 100%;
+            max-width: 980px;
+            height: auto;
+            max-height: 120px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            margin-bottom: 3rem;
+        }
+
+        .login-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .demo-roles-container {
+            margin-top: 1.75rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .demo-roles-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .demo-role-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <!-- FULL-WIDTH UNCROPPED COLLEGE LOGO HEADER -->
+        <header class="college-header-bar">
+            <div class="college-header-inner">
+                <img src="stella_marys_logo.png" alt="Stella Mary's College of Engineering" class="college-logo-full">
+            </div>
+        </header>
+
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="status-badge status-submitted mb-2" style="font-size: 0.78rem;">
+                    <img src="stella_marys_emblem.png" alt="Stella Mary's Emblem" style="width: 20px; height: 20px; object-fit: contain; vertical-align: middle; margin-right: 0.25rem;"> Department of Computer Science & Engineering
+                </div>
+                <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main);">Hyna Studio System</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+                    Student Development & Portfolio Management Portal
+                </p>
+            </div>
+
+            <form onsubmit="handleFormLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="student@stellamary.edu" value="student@stellamary.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label class="form-label">Password</label>
+                        <a href="#" onclick="showToast('Password reset link sent to registered email.', 'info', 'Forgot Password'); return false;" style="font-size: 0.78rem; color: var(--primary);">Forgot?</a>
+                    </div>
+                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="password123" required>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.825rem; color: var(--text-muted); cursor: pointer;">
+                        <input type="checkbox" checked style="accent-color: var(--primary);"> Remember session
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+                </button>
+            </form>
+
+            <div class="demo-roles-container">
+                <div class="demo-roles-title">Select Portal Role</div>
+                <div class="demo-role-btn-grid">
+                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('Student')">
+                        <i class="fa-solid fa-user-graduate text-primary"></i> Student
+                    </button>
+                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('Faculty')">
+                        <i class="fa-solid fa-chalkboard-user text-purple"></i> Faculty
+                    </button>
+                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('HOD/Admin')">
+                        <i class="fa-solid fa-user-tie text-teal"></i> HOD / Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        function loginWithRole(role) {
+            localStorage.setItem("hyna_selected_role", role);
+            if (window.addAuditLog) {
+                window.addAuditLog("Login", `Logged in as ${role}`, "Success");
+            }
+            showToast(`Logged in successfully as ${role}`, "success", "Welcome");
+            setTimeout(() => {
+                window.location.href = "student-dashboard.html";
+            }, 600);
+        }
+
+        function handleFormLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById("login-email").value.toLowerCase();
+            let role = "Student";
+            if (email.includes("faculty")) role = "Faculty";
+            if (email.includes("hod")) role = "HOD/Admin";
+            if (email.includes("admin")) role = "System Admin";
+
+            loginWithRole(role);
+        }
+    </script>
+</body>
+</html>

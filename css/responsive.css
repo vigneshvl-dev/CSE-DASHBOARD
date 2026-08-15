@@ -1,0 +1,99 @@
+/* ==========================================================================
+   HYNA STUDIO - RESPONSIVE LAYOUT & MEDIA QUERIES
+   ========================================================================== */
+
+/* DESKTOP & TABLET ALIGNMENT (769px and above) */
+@media (min-width: 769px) {
+    .sidebar {
+        width: 260px !important;
+        transform: translateX(0) !important;
+    }
+
+    .main-wrapper {
+        margin-left: 260px !important;
+        width: calc(100vw - 260px) !important;
+    }
+}
+
+/* TABLET BREAKPOINT (769px to 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .content-body {
+        padding: 1.25rem 1.25rem 2.5rem 1.25rem;
+    }
+
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* MOBILE BREAKPOINT (under 768px) */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 260px !important;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100vw !important;
+    }
+
+    .top-navbar {
+        padding: 0 1rem;
+    }
+
+    .global-search-bar {
+        display: none; /* Hide topbar search on small mobile, search page handles search */
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .modal-container {
+        width: 95%;
+        margin: 0 0.75rem;
+    }
+
+    .user-menu-details {
+        display: none;
+    }
+
+    #toast-container {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    .toast {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+/* SMALL MOBILE (under 480px) */
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+}

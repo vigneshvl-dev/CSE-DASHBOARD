@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification — Hyna Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="main-wrapper">
+            <div id="navbar-container"></div>
+
+            <main class="content-body">
+                <!-- TOOLBAR -->
+                <div class="card mb-4" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+                        <div class="global-search-bar" style="width: 320px;">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="verif-search-input" placeholder="Search by student or submission..." onkeyup="renderVerificationQueue()">
+                        </div>
+
+                        <select id="verif-filter-status" class="form-control" style="width: auto;" onchange="renderVerificationQueue()">
+                            <option value="ALL">All Statuses</option>
+                            <option value="Submitted">Submitted (Pending)</option>
+                            <option value="Under Review">Under Review</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Needs Changes">Needs Changes</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- VERIFICATION TABLE CARD -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-clipboard-check text-primary"></i> Faculty Verification Queue</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Submission Title</th>
+                                    <th>Category</th>
+                                    <th>Submitted Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verification-table-body">
+                                <!-- Rendered dynamically by verification.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- REVIEW SUBMISSION MODAL -->
+    <div class="modal-backdrop" id="review-submission-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Faculty Review Submission</h3>
+                <button class="modal-close-btn" onclick="closeModal('review-submission-modal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="card mb-3" style="background: var(--bg-main);">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="font-bold text-main" id="review-student-name">Pravin Kumar</span>
+                        <span class="status-badge status-submitted" id="review-status-pill">Submitted</span>
+                    </div>
+                    <h4 class="font-bold text-primary text-md" id="review-title">Autonomous Quadcopter Navigation</h4>
+                    <div class="text-xs text-muted mt-1">
+                        Category: <strong id="review-category">Project</strong> • Submitted: <span id="review-date">2026-08-11</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Attached Evidence Document</label>
+                    <div class="d-flex align-items-center justify-content-between p-3 border rounded bg-surface">
+                        <span class="font-semibold text-sm" id="review-evidence-file"><i class="fa-solid fa-file-pdf text-danger me-2"></i> documentation.pdf</span>
+                        <button onclick="alert('Viewing Evidence File Prototype')" class="btn btn-sm btn-secondary"><i class="fa-solid fa-eye me-1"></i> Preview</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Faculty Feedback / Review Notes</label>
+                    <textarea id="review-notes-input" class="form-control" rows="3" placeholder="Provide notes or feedback for the student..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('review-submission-modal')">Cancel</button>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-warning" onclick="processVerificationDecision('Needs Changes')"><i class="fa-solid fa-pen"></i> Needs Changes</button>
+                    <button type="button" class="btn btn-danger" onclick="processVerificationDecision('Rejected')"><i class="fa-solid fa-xmark"></i> Reject</button>
+                    <button type="button" class="btn btn-success" onclick="processVerificationDecision('Verified')"><i class="fa-solid fa-check"></i> Approve & Verify</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/verification.js"></script>
+</body>
+</html>

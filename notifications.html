@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications — Hyna Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div id="sidebar-container"></div>
+        <div class="main-wrapper">
+            <div id="navbar-container"></div>
+
+            <main class="content-body">
+                <!-- TOOLBAR -->
+                <div class="card mb-4" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <h3 class="card-title"><i class="fa-solid fa-bell text-primary"></i> Notification Center</h3>
+                        <button class="btn btn-secondary btn-sm" onclick="markAllNotificationsRead()">
+                            <i class="fa-solid fa-check-double me-1"></i> Mark All as Read
+                        </button>
+                    </div>
+                </div>
+
+                <!-- NOTIFICATIONS LIST CONTAINER -->
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div id="notifications-list-container">
+                        <!-- Rendered dynamically by notifications.js -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderNotificationsList();
+        });
+    </script>
+</body>
+</html>
