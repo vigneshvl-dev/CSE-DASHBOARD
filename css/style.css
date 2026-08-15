@@ -11,9 +11,9 @@
     --bg-surface: #ffffff;
     --bg-card: #ffffff;
     --bg-card-hover: #f8fafc;
-    --bg-sidebar: #ecfdf5;
-    --bg-sidebar-hover: #d1fae5;
-    --bg-sidebar-active: #a7f3d0;
+    --bg-sidebar: #064e3b;
+    --bg-sidebar-hover: #065f46;
+    --bg-sidebar-active: #047857;
     
     --text-main: #0f172a;
     --text-muted: #64748b;
@@ -116,11 +116,11 @@ button {
     overflow-x: hidden;
 }
 
-/* SIDEBAR STYLES - LIGHT GREEN THEME */
+/* SIDEBAR STYLES - DARK GREEN THEME */
 .sidebar {
     width: var(--sidebar-width);
     background-color: var(--bg-sidebar);
-    color: #065f46;
+    color: #ecfdf5;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -129,7 +129,7 @@ button {
     bottom: 0;
     z-index: 100;
     transition: width var(--transition-normal);
-    border-right: 1px solid #a7f3d0;
+    border-right: 1px solid #047857;
 }
 
 .sidebar-header {
@@ -137,14 +137,14 @@ button {
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    border-bottom: 1px solid #a7f3d0;
+    border-bottom: 1px solid #047857;
 }
 
 .sidebar-logo {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #064e3b;
+    color: #ecfdf5;
     font-weight: 800;
     font-size: 1.15rem;
     letter-spacing: -0.02em;
@@ -180,7 +180,7 @@ button {
 
 .sidebar-brand-sub {
     font-size: 0.7rem;
-    color: #047857;
+    color: #a7f3d0;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 700;
@@ -199,7 +199,7 @@ button {
     width: 4px;
 }
 .sidebar-nav::-webkit-scrollbar-thumb {
-    background: #a7f3d0;
+    background: #047857;
     border-radius: 4px;
 }
 
@@ -207,7 +207,7 @@ button {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #047857;
+    color: #a7f3d0;
     padding: 0.75rem 0.75rem 0.35rem 0.75rem;
     font-weight: 800;
 }
@@ -218,7 +218,7 @@ button {
     gap: 0.85rem;
     padding: 0.75rem 0.9rem;
     border-radius: var(--radius-md);
-    color: #065f46;
+    color: #ecfdf5;
     font-size: 0.9rem;
     font-weight: 600;
     transition: all var(--transition-fast);
@@ -228,12 +228,12 @@ button {
     font-size: 1.15rem;
     width: 22px;
     text-align: center;
-    color: #047857;
+    color: #a7f3d0;
 }
 
 .nav-item:hover {
     background-color: var(--bg-sidebar-hover);
-    color: #064e3b;
+    color: #ecfdf5;
 }
 
 .nav-item.active {
@@ -248,12 +248,12 @@ button {
 
 .sidebar-footer {
     padding: 1rem;
-    border-top: 1px solid #a7f3d0;
+    border-top: 1px solid #047857;
 }
 
 .role-switcher-box {
-    background: #ffffff;
-    border: 1px solid #a7f3d0;
+    background: #065f46;
+    border: 1px solid #047857;
     border-radius: var(--radius-md);
     padding: 0.75rem;
     display: flex;
@@ -283,7 +283,7 @@ button {
 .role-name {
     font-size: 0.825rem;
     font-weight: 700;
-    color: #064e3b;
+    color: #ecfdf5;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -291,7 +291,7 @@ button {
 
 .role-badge-sm {
     font-size: 0.68rem;
-    color: #047857;
+    color: #a7f3d0;
     font-weight: 600;
     text-transform: capitalize;
 }
