@@ -51,6 +51,10 @@ const DEFAULT_STUDENTS = [
         name: "Pravin Kumar",
         email: "student@stellamary.edu",
         registerNo: "962221104001",
+        rollNo: "25RUCSA001",
+        erpId: "ERP2025001",
+        phone: "9876543210",
+        dob: "2003-05-15",
         department: "Computer Science",
         year: "III",
         section: "A",
@@ -66,6 +70,10 @@ const DEFAULT_STUDENTS = [
         name: "Alex Rivera",
         email: "alex.rivera@stellamary.edu",
         registerNo: "962221104002",
+        rollNo: "25RUCSA002",
+        erpId: "ERP2025002",
+        phone: "9876543211",
+        dob: "2003-08-22",
         department: "Computer Science",
         year: "III",
         section: "A",
@@ -81,6 +89,10 @@ const DEFAULT_STUDENTS = [
         name: "Sophia Chen",
         email: "sophia.chen@stellamary.edu",
         registerNo: "962221104003",
+        rollNo: "25RUCSA003",
+        erpId: "ERP2025003",
+        phone: "9876543212",
+        dob: "2002-12-10",
         department: "Computer Science",
         year: "IV",
         section: "B",
@@ -96,6 +108,10 @@ const DEFAULT_STUDENTS = [
         name: "Marcus Vance",
         email: "marcus.vance@stellamary.edu",
         registerNo: "962221104004",
+        rollNo: "25RUCSA004",
+        erpId: "ERP2025004",
+        phone: "9876543213",
+        dob: "2004-02-28",
         department: "Computer Science",
         year: "II",
         section: "A",
@@ -354,7 +370,6 @@ const DEFAULT_SETTINGS = {
 
 // INITIALIZATION FUNCTION FOR LOCALSTORAGE
 function initDataStore() {
-    // If existing store contains old 'Demo' text, clear and re-initialize
     const usersRaw = localStorage.getItem("hyna_users");
     if (!usersRaw || usersRaw.includes("Demo")) {
         localStorage.setItem("hyna_users", JSON.stringify(DEFAULT_USERS));
@@ -368,6 +383,15 @@ function initDataStore() {
         localStorage.setItem("hyna_notifications", JSON.stringify(DEFAULT_NOTIFICATIONS));
         localStorage.setItem("hyna_audit_logs", JSON.stringify(DEFAULT_AUDIT_LOGS));
         localStorage.setItem("hyna_settings", JSON.stringify(DEFAULT_SETTINGS));
+    } else {
+        let students = JSON.parse(localStorage.getItem("hyna_students") || "[]");
+        if (students.length > 0 && !students[0].hasOwnProperty("dob")) {
+            students = students.map((s, i) => {
+                const def = DEFAULT_STUDENTS[i] || {};
+                return { ...def, ...s };
+            });
+            localStorage.setItem("hyna_students", JSON.stringify(students));
+        }
     }
 
     if (!localStorage.getItem("hyna_selected_role")) {
