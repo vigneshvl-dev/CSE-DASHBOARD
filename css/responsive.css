@@ -13,6 +13,10 @@
         margin-left: 260px !important;
         width: calc(100vw - 260px) !important;
     }
+
+    .sidebar-toggle-btn {
+        display: none;
+    }
 }
 
 /* TABLET BREAKPOINT (769px to 1024px) */
@@ -45,6 +49,10 @@
 
     .top-navbar {
         padding: 0 1rem;
+    }
+
+    .sidebar-toggle-btn {
+        display: flex;
     }
 
     .global-search-bar {

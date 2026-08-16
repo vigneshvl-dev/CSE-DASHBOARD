@@ -111,44 +111,48 @@
                 </p>
             </div>
 
-            <form onsubmit="handleFormLogin(event)">
+            <form onsubmit="handleOTPLogin(event)">
                 <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="student@stellamary.edu" value="student@stellamary.edu" required>
+                    <label class="form-label">Login By</label>
+                    <select id="login-identifier-type" class="form-control" onchange="updateIdentifierPlaceholder()">
+                        <option value="registerNo">Reg Number</option>
+                        <option value="rollNo">Roll Number</option>
+                        <option value="phone">Phone Number</option>
+                        <option value="erpId">Student ERP ID</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label class="form-label">Password</label>
-                        <a href="#" onclick="showToast('Password reset link sent to registered email.', 'info', 'Forgot Password'); return false;" style="font-size: 0.78rem; color: var(--primary);">Forgot?</a>
-                    </div>
-                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="password123" required>
+                    <label class="form-label" id="identifier-label">Reg Number</label>
+                    <input type="text" id="login-identifier" class="form-control" placeholder="Enter your Register Number" required>
                 </div>
 
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.825rem; color: var(--text-muted); cursor: pointer;">
-                        <input type="checkbox" checked style="accent-color: var(--primary);"> Remember session
-                    </label>
+                <div class="form-group">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" id="login-dob" class="form-control" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem;">
-                    <i class="fa-solid fa-right-to-bracket"></i> Sign In to Portal
+                    <i class="fa-solid fa-right-to-bracket"></i> Sign to Portal
                 </button>
             </form>
 
-            <div class="demo-roles-container">
-                <div class="demo-roles-title">Select Portal Role</div>
-                <div class="demo-role-btn-grid">
-                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('Student')">
-                        <i class="fa-solid fa-user-graduate text-primary"></i> Student
-                    </button>
-                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('Faculty')">
-                        <i class="fa-solid fa-chalkboard-user text-purple"></i> Faculty
-                    </button>
-                    <button class="btn btn-secondary btn-sm" onclick="loginWithRole('HOD/Admin')">
-                        <i class="fa-solid fa-user-tie text-teal"></i> HOD / Admin
-                    </button>
+            <div id="otp-section" style="display: none; margin-top: 1.25rem;">
+                <div class="form-group">
+                    <label class="form-label">Enter OTP</label>
+                    <input type="text" id="login-otp" class="form-control" placeholder="Enter 6-digit OTP" maxlength="6" style="text-align: center; font-size: 1.25rem; letter-spacing: 0.5rem;">
                 </div>
+                <button type="button" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem;" onclick="verifyOTP()">
+                    <i class="fa-solid fa-check-circle"></i> Verify & Login
+                </button>
+                <p class="text-muted text-sm" style="text-align: center; margin-top: 0.75rem;" id="otp-message"></p>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center;">
+                <p class="text-muted text-sm" style="margin-bottom: 1rem;">Or continue with</p>
+                <button type="button" class="btn btn-secondary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem; background: #fff; border: 1px solid #dadce0; color: #3c4043;" onclick="googleLogin()">
+                    <i class="fa-brands fa-google" style="color: #4285f4; margin-right: 0.5rem;"></i> Continue with Google
+                </button>
             </div>
         </div>
     </div>
@@ -158,6 +162,90 @@
     <script src="js/audit.js"></script>
     <script src="js/app.js"></script>
     <script>
+        const OTP_LABELS = {
+            registerNo: "Reg Number",
+            rollNo: "Roll Number",
+            phone: "Phone Number",
+            erpId: "Student ERP ID"
+        };
+
+        const OTP_PLACEHOLDERS = {
+            registerNo: "Enter your Register Number",
+            rollNo: "Enter your Roll Number",
+            phone: "Enter your Phone Number",
+            erpId: "Enter your Student ERP ID"
+        };
+
+        function updateIdentifierPlaceholder() {
+            const type = document.getElementById("login-identifier-type").value;
+            document.getElementById("identifier-label").innerText = OTP_LABELS[type];
+            document.getElementById("login-identifier").placeholder = OTP_PLACEHOLDERS[type];
+        }
+
+        function handleOTPLogin(e) {
+            e.preventDefault();
+            const type = document.getElementById("login-identifier-type").value;
+            const value = document.getElementById("login-identifier").value.trim();
+            const dob = document.getElementById("login-dob").value;
+
+            const students = getStoreData("students") || [];
+            const matched = students.find(s => s[type] && s[type].toString().toLowerCase() === value.toLowerCase() && s.dob === dob);
+
+            if (!matched) {
+                showToast("No student found with the provided details. Please check and try again.", "error", "Login Failed");
+                return;
+            }
+
+            const otpSection = document.getElementById("otp-section");
+            otpSection.style.display = "block";
+            document.getElementById("otp-message").innerText = `OTP sent to the number linked with ${OTP_LABELS[type]} ending ****${matched.phone.slice(-4)}`;
+            document.getElementById("otp-message").style.color = "var(--text-muted)";
+            document.getElementById("login-otp").value = "";
+
+            window._pendingStudentId = matched.id;
+            window._pendingStudentRole = matched.role || "Student";
+        }
+
+        function verifyOTP() {
+            const otp = document.getElementById("login-otp").value.trim();
+            if (otp !== "123456") {
+                showToast("Invalid OTP. Please try again.", "error", "Verification Failed");
+                return;
+            }
+
+            const users = getStoreData("users");
+            const student = users.find(u => u.id === window._pendingStudentId);
+            if (student) {
+                localStorage.setItem("hyna_selected_role", window._pendingStudentRole || student.role);
+                if (window.addAuditLog) {
+                    window.addAuditLog("Login", `Logged in via OTP as ${student.name}`, "Success");
+                }
+                showToast(`Welcome back, ${student.name}!`, "success", "Login Successful");
+                setTimeout(() => {
+                    window.location.href = "student-dashboard.html";
+                }, 800);
+            } else {
+                showToast("Student record not found in system.", "error", "Error");
+            }
+        }
+
+        function googleLogin() {
+            const users = getStoreData("users");
+            const student = users.find(u => u.role === "Student") || users[0];
+            if (student) {
+                localStorage.setItem("hyna_selected_role", student.role);
+                if (window.addAuditLog) {
+                    window.addAuditLog("Login", `Logged in via Google as ${student.name}`, "Success");
+                }
+                showToast(`Welcome, ${student.name}!`, "success", "Google Login Successful");
+                setTimeout(() => {
+                    window.location.href = "student-dashboard.html";
+                }, 800);
+            } else {
+                showToast("Unable to process Google login. Please try again.", "error", "Error");
+            }
+        }
+
         function loginWithRole(role) {
             localStorage.setItem("hyna_selected_role", role);
             if (window.addAuditLog) {
@@ -167,17 +255,6 @@
             setTimeout(() => {
                 window.location.href = "student-dashboard.html";
             }, 600);
-        }
-
-        function handleFormLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById("login-email").value.toLowerCase();
-            let role = "Student";
-            if (email.includes("faculty")) role = "Faculty";
-            if (email.includes("hod")) role = "HOD/Admin";
-            if (email.includes("admin")) role = "System Admin";
-
-            loginWithRole(role);
         }
     </script>
 </body>
