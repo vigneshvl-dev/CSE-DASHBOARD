@@ -68,6 +68,29 @@
             margin-bottom: 2rem;
         }
 
+        .dept-badge-clean {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1e40af;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            margin-bottom: 0.75rem;
+        }
+
+        .dept-badge-clean img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            vertical-align: middle;
+            background: transparent;
+        }
+
         .demo-roles-container {
             margin-top: 1.75rem;
             padding-top: 1.5rem;
@@ -102,8 +125,8 @@
 
         <div class="login-card">
             <div class="login-brand">
-                <div class="status-badge status-submitted mb-2" style="font-size: 0.78rem;">
-                    <img src="stella_marys_emblem.png" alt="Stella Mary's Emblem" style="width: 20px; height: 20px; object-fit: contain; vertical-align: middle; margin-right: 0.25rem;"> Department of Computer Science & Engineering
+                <div class="dept-badge-clean">
+                    <img src="stella_marys_emblem.png" alt="Stella Mary's Emblem"> Department of Computer Science & Engineering
                 </div>
                 <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main);">Hyna Studio System</h2>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
@@ -113,17 +136,7 @@
 
             <form onsubmit="handleOTPLogin(event)">
                 <div class="form-group">
-                    <label class="form-label">Login By</label>
-                    <select id="login-identifier-type" class="form-control" onchange="updateIdentifierPlaceholder()">
-                        <option value="registerNo">Reg Number</option>
-                        <option value="rollNo">Roll Number</option>
-                        <option value="phone">Phone Number</option>
-                        <option value="erpId">Student ERP ID</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" id="identifier-label">Reg Number</label>
+                    <label class="form-label">Register Number</label>
                     <input type="text" id="login-identifier" class="form-control" placeholder="Enter your Register Number" required>
                 </div>
 
@@ -162,34 +175,19 @@
     <script src="js/audit.js"></script>
     <script src="js/app.js"></script>
     <script>
-        const OTP_LABELS = {
-            registerNo: "Reg Number",
-            rollNo: "Roll Number",
-            phone: "Phone Number",
-            erpId: "Student ERP ID"
-        };
-
-        const OTP_PLACEHOLDERS = {
-            registerNo: "Enter your Register Number",
-            rollNo: "Enter your Roll Number",
-            phone: "Enter your Phone Number",
-            erpId: "Enter your Student ERP ID"
-        };
-
-        function updateIdentifierPlaceholder() {
-            const type = document.getElementById("login-identifier-type").value;
-            document.getElementById("identifier-label").innerText = OTP_LABELS[type];
-            document.getElementById("login-identifier").placeholder = OTP_PLACEHOLDERS[type];
-        }
-
         function handleOTPLogin(e) {
             e.preventDefault();
-            const type = document.getElementById("login-identifier-type").value;
-            const value = document.getElementById("login-identifier").value.trim();
+            const value = document.getElementById("login-identifier").value.trim().toLowerCase();
             const dob = document.getElementById("login-dob").value;
 
             const students = getStoreData("students") || [];
-            const matched = students.find(s => s[type] && s[type].toString().toLowerCase() === value.toLowerCase() && s.dob === dob);
+            const matched = students.find(s => {
+                const matchReg = s.registerNo && s.registerNo.toString().toLowerCase() === value;
+                const matchRoll = s.rollNo && s.rollNo.toString().toLowerCase() === value;
+                const matchPhone = s.phone && s.phone.toString().toLowerCase() === value;
+                const matchErp = s.erpId && s.erpId.toString().toLowerCase() === value;
+                return (matchReg || matchRoll || matchPhone || matchErp) && s.dob === dob;
+            });
 
             if (!matched) {
                 showToast("No student found with the provided details. Please check and try again.", "error", "Login Failed");
@@ -198,7 +196,8 @@
 
             const otpSection = document.getElementById("otp-section");
             otpSection.style.display = "block";
-            document.getElementById("otp-message").innerText = `OTP sent to the number linked with ${OTP_LABELS[type]} ending ****${matched.phone.slice(-4)}`;
+            const phoneDisplay = matched.phone ? `****${matched.phone.slice(-4)}` : 'your registered number';
+            document.getElementById("otp-message").innerText = `OTP sent to the number ending ${phoneDisplay}`;
             document.getElementById("otp-message").style.color = "var(--text-muted)";
             document.getElementById("login-otp").value = "";
 
