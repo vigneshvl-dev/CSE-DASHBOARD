@@ -18,11 +18,11 @@ function renderSidebar() {
     if (!sidebarContainer) return;
 
     const currentRole = getCurrentRole();
-    const currentPage = window.location.pathname.split("/").pop() || "student-dashboard.html";
+    const currentPage = window.location.pathname.split("/").pop() || "search.html";
 
     // Nav items list definition
     const navItems = [
-        { label: "Dashboard", icon: "fa-chart-pie", href: "student-dashboard.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
+        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "My Profile", icon: "fa-user-graduate", href: "student-profile.html", roles: ["Student", "Faculty", "HOD/Admin"] },
         { label: "Students", icon: "fa-users", href: "students.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
         { label: "Projects", icon: "fa-diagram-project", href: "projects.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
@@ -31,11 +31,9 @@ function renderSidebar() {
         { label: "Achievements", icon: "fa-trophy", href: "achievements.html", roles: ["Student", "Faculty", "HOD/Admin"] },
         { label: "Hyna Hub", icon: "fa-comments", href: "hyna-hub.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Verification", icon: "fa-circle-check", href: "verification.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
-        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Reports", icon: "fa-file-lines", href: "reports.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
         { label: "Notifications", icon: "fa-bell", href: "notifications.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
-        { label: "Audit Logs", icon: "fa-clipboard-list", href: "audit-logs.html", roles: ["HOD/Admin", "System Admin"] },
-        { label: "Settings", icon: "fa-gear", href: "settings.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] }
+        { label: "Audit Logs", icon: "fa-clipboard-list", href: "audit-logs.html", roles: ["HOD/Admin", "System Admin"] }
     ];
 
     const currentUser = getCurrentUser();
@@ -49,7 +47,7 @@ function renderSidebar() {
     sidebarContainer.innerHTML = `
         <aside class="sidebar" id="app-sidebar">
             <div class="sidebar-header">
-                <a href="student-dashboard.html" class="sidebar-logo">
+                <a href="search.html" class="sidebar-logo">
                     <img src="stella_marys_emblem.png" class="sidebar-logo-img" alt="Stella Mary's Logo">
                     <div class="sidebar-brand-text">
                         <span>${brandTitle}</span>
@@ -61,7 +59,7 @@ function renderSidebar() {
             <div class="sidebar-nav">
                 <div class="nav-section-title">Main Menu</div>
                 ${navItems.filter(item => item.roles.includes(currentRole)).map(item => {
-                    const isActive = currentPage === item.href || (currentPage === "" && item.href === "student-dashboard.html");
+                    const isActive = currentPage === item.href || (currentPage === "" && item.href === "search.html");
                     return `
                         <a href="${item.href}" class="nav-item ${isActive ? 'active' : ''}">
                             <i class="fa-solid ${item.icon}"></i>

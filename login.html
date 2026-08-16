@@ -222,7 +222,7 @@
                 }
                 showToast(`Welcome back, ${student.name}!`, "success", "Login Successful");
                 setTimeout(() => {
-                    window.location.href = "student-dashboard.html";
+                    window.location.href = "search.html";
                 }, 800);
             } else {
                 showToast("Student record not found in system.", "error", "Error");
@@ -239,7 +239,7 @@
                 }
                 showToast(`Welcome, ${student.name}!`, "success", "Google Login Successful");
                 setTimeout(() => {
-                    window.location.href = "student-dashboard.html";
+                    window.location.href = "search.html";
                 }, 800);
             } else {
                 showToast("Unable to process Google login. Please try again.", "error", "Error");
@@ -253,7 +253,7 @@
             }
             showToast(`Logged in successfully as ${role}`, "success", "Welcome");
             setTimeout(() => {
-                window.location.href = "student-dashboard.html";
+                window.location.href = "search.html";
             }, 600);
         }
     </script>
