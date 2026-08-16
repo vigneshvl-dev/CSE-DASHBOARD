@@ -55,7 +55,7 @@ const DEFAULT_STUDENTS = [
         registerNo: "962221104001",
         rollNo: "25RUCSA001",
         erpId: "ERP2025001",
-        phone: "9876543210",
+        phone: "7305104191",
         dob: "2003-05-15",
         department: "Computer Science",
         year: "III",
@@ -387,12 +387,22 @@ function initDataStore() {
         localStorage.setItem("hyna_settings", JSON.stringify(DEFAULT_SETTINGS));
     } else {
         let students = JSON.parse(localStorage.getItem("hyna_students") || "[]");
-        if (students.length > 0 && !students[0].hasOwnProperty("dob")) {
-            students = students.map((s, i) => {
-                const def = DEFAULT_STUDENTS[i] || {};
-                return { ...def, ...s };
-            });
-            localStorage.setItem("hyna_students", JSON.stringify(students));
+        if (students.length > 0) {
+            let changed = false;
+            if (students[0].id === "STU001" && students[0].phone !== "7305104191") {
+                students[0].phone = "7305104191";
+                changed = true;
+            }
+            if (!students[0].hasOwnProperty("dob")) {
+                students = students.map((s, i) => {
+                    const def = DEFAULT_STUDENTS[i] || {};
+                    return { ...def, ...s };
+                });
+                changed = true;
+            }
+            if (changed) {
+                localStorage.setItem("hyna_students", JSON.stringify(students));
+            }
         }
     }
 
