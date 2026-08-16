@@ -22,8 +22,8 @@ function renderSidebar() {
 
     // Nav items list definition
     const navItems = [
-        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "My Profile", icon: "fa-user-graduate", href: "student-profile.html", roles: ["Student", "Faculty", "HOD/Admin"] },
+        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Students", icon: "fa-users", href: "students.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
         { label: "Projects", icon: "fa-diagram-project", href: "projects.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Certificates", icon: "fa-certificate", href: "certificates.html", roles: ["Student", "Faculty", "HOD/Admin"] },
