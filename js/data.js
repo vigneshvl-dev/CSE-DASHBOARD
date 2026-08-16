@@ -14,7 +14,8 @@ const DEFAULT_USERS = [
         section: "A",
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
         bio: "Passionate Full-Stack Developer & AI Enthusiast. Building next-gen web applications.",
-        skills: ["JavaScript", "HTML5/CSS3", "Python", "Git", "Node.js", "UI/UX Design"]
+        skills: ["JavaScript", "HTML5/CSS3", "Python", "Git", "Node.js", "UI/UX Design"],
+        cgpa: "8.5"
     },
     {
         id: "FAC001",
