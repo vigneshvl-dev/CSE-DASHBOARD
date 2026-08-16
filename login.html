@@ -161,12 +161,7 @@
                 <p class="text-muted text-sm" style="text-align: center; margin-top: 0.75rem;" id="otp-message"></p>
             </div>
 
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); text-align: center;">
-                <p class="text-muted text-sm" style="margin-bottom: 1rem;">Or continue with</p>
-                <button type="button" class="btn btn-secondary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem; background: #fff; border: 1px solid #dadce0; color: #3c4043;" onclick="googleLogin()">
-                    <i class="fa-brands fa-google" style="color: #4285f4; margin-right: 0.5rem;"></i> Continue with Google
-                </button>
-            </div>
+
         </div>
     </div>
 
@@ -228,22 +223,6 @@
             }
         }
 
-        function googleLogin() {
-            const users = getStoreData("users");
-            const student = users.find(u => u.role === "Student") || users[0];
-            if (student) {
-                localStorage.setItem("hyna_selected_role", student.role);
-                if (window.addAuditLog) {
-                    window.addAuditLog("Login", `Logged in via Google as ${student.name}`, "Success");
-                }
-                showToast(`Welcome, ${student.name}!`, "success", "Google Login Successful");
-                setTimeout(() => {
-                    window.location.href = "search.html";
-                }, 800);
-            } else {
-                showToast("Unable to process Google login. Please try again.", "error", "Error");
-            }
-        }
 
         function loginWithRole(role) {
             localStorage.setItem("hyna_selected_role", role);
