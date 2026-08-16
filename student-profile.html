@@ -283,6 +283,7 @@
                                 <div class="info-item" style="grid-column:1/-1;"><div class="info-icon blue"><i class="fa-solid fa-location-dot"></i></div><div class="info-content"><div class="info-label">Permanent Address</div><div class="info-value" style="line-height:1.65;">12-60B, Pananvilai, Cheramangalam,<br>Manavalakurichy Po, K.K. Dist &ndash; 629252,<br>Kanyakumari, Tamil Nadu &ndash; 629252</div></div></div>
                                 <div class="info-item"><div class="info-icon green"><i class="fa-solid fa-mobile-screen"></i></div><div class="info-content"><div class="info-label">Mobile No.</div><div class="info-value"><a href="tel:9894670423">9894670423</a></div></div></div>
                                 <div class="info-item"><div class="info-icon purple"><i class="fa-solid fa-envelope-open-text"></i></div><div class="info-content"><div class="info-label">Institute Email</div><div class="info-value"><a href="mailto:dharshan.cs25@stellamaryscoe.edu.in">dharshan.cs25@<wbr>stellamaryscoe.edu.in</a></div></div></div>
+                                <div class="info-item" style="grid-column:1/-1;"><div class="info-icon red"><i class="fa-solid fa-key"></i></div><div class="info-content"><div class="info-label">Institute Email Password</div><div class="info-value" style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;"><span id="institute-password" style="font-weight:600;color:var(--text-main);">••••••••</span><button id="view-password-btn" onclick="togglePassword()" style="font-size:0.75rem;padding:0.3rem 0.7rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:opacity 0.2s;white-space:nowrap;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'"><i class="fa-solid fa-eye fa-xs"></i> View Password</button></div></div></div>
                                 <div class="info-item"><div class="info-icon orange"><i class="fa-solid fa-envelope"></i></div><div class="info-content"><div class="info-label">Personal Email</div><div class="info-value"><a href="mailto:jdharshan2@gmail.com">jdharshan2@gmail.com</a></div></div></div>
                             </div>
                         </div>
@@ -380,6 +381,10 @@
                     <div class="form-group">
                         <label class="form-label">CGPA</label>
                         <input type="text" id="edit-cgpa" class="form-control" placeholder="e.g. 8.5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Institute Email Password</label>
+                        <input type="text" id="edit-password" class="form-control" placeholder="Enter password">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -497,6 +502,22 @@
             ).join('');
         }
 
+        function togglePassword() {
+            const user = getCurrentUser();
+            if (!user) return;
+            const btn = document.getElementById("view-password-btn");
+            const pwdSpan = document.getElementById("institute-password");
+            if (!btn || !pwdSpan) return;
+
+            if (pwdSpan.innerText === "••••••••") {
+                pwdSpan.innerText = user.password || "";
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash fa-xs"></i> Hide Password';
+            } else {
+                pwdSpan.innerText = "••••••••";
+                btn.innerHTML = '<i class="fa-solid fa-eye fa-xs"></i> View Password';
+            }
+        }
+
         function openEditProfileModal() {
             const user = getCurrentUser();
             if (!user) return;
@@ -508,6 +529,7 @@
             document.getElementById("edit-bio").value   = user.bio   || "";
             document.getElementById("edit-skills").value = (user.skills || []).join(", ");
             document.getElementById("edit-cgpa").value = user.cgpa || "";
+            document.getElementById("edit-password").value = user.password || "";
             
             const previewEl = document.getElementById("modal-avatar-preview");
             if (previewEl) {
@@ -532,6 +554,7 @@
             const skillsInput = document.getElementById("edit-skills").value;
             user.skills = skillsInput.split(",").map(s => s.trim()).filter(Boolean);
             user.cgpa = document.getElementById("edit-cgpa").value || "";
+            user.password = document.getElementById("edit-password").value || "";
 
             if (pendingModalAvatarData) {
                 user.avatar = pendingModalAvatarData;
