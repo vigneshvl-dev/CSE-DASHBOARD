@@ -9,47 +9,71 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <style>
-        /* ── BANNER ── */
-        .profile-banner {
-            height: 180px;
-            background: linear-gradient(135deg, #1a56db 0%, #7e3af2 55%, #0e9f6e 100%);
+        /* ── CLEAN PROFILE HEADER (NO BANNER) ── */
+        .profile-header-clean {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            position: relative;
-            margin-bottom: 3rem;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
         }
-        .profile-banner::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        /* ── AVATAR ── */
+        /* ── AVATAR & PHOTO UPLOAD ── */
         .profile-avatar-wrapper {
-            position: absolute;
-            bottom: -55px;
-            left: 2rem;
-            display: flex;
-            align-items: flex-end;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
         }
         .profile-avatar-img {
-            width: 110px; height: 110px; border-radius: 50%;
-            border: 4px solid var(--bg-card); object-fit: cover;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid var(--primary); object-fit: cover;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            transition: transform 0.2s, filter 0.2s;
+            display: block;
+        }
+        .profile-avatar-wrapper:hover .profile-avatar-img {
+            filter: brightness(0.85);
+            transform: scale(1.02);
         }
         .profile-avatar-initials {
-            width: 110px; height: 110px; border-radius: 50%;
-            border: 4px solid var(--bg-card);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
             background: linear-gradient(135deg, #1a56db, #7e3af2);
             display: flex; align-items: center; justify-content: center;
-            font-size: 2.4rem; font-weight: 800; color: #fff; letter-spacing: 1px;
+            font-size: 2.2rem; font-weight: 800; color: #fff; letter-spacing: 1px;
+            transition: transform 0.2s, filter 0.2s;
         }
-        .profile-header-info {
+        .profile-avatar-wrapper:hover .profile-avatar-initials {
+            filter: brightness(0.85);
+            transform: scale(1.02);
+        }
+        .avatar-camera-btn {
             position: absolute;
-            bottom: 1.5rem;
-            left: calc(2rem + 110px + 1.25rem);
-            padding-bottom: 0;
+            bottom: 0px;
+            right: 0px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            border: 2px solid var(--bg-card);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
         }
-        .profile-name-title  { font-size: 1.55rem; font-weight: 800; color: var(--text-main); }
+        .avatar-camera-btn:hover {
+            transform: scale(1.1);
+            background: #1d4ed8;
+        }
+        .profile-name-title  { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
         .profile-meta-pills  { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.35rem; flex-wrap: wrap; }
         /* ── TABS ── */
         .tab-nav-bar {
@@ -144,22 +168,42 @@
             <div id="navbar-container"></div>
 
             <main class="content-body">
-                <!-- PROFILE HEADER BANNER -->
-                <div class="profile-banner">
-                    <div class="profile-avatar-wrapper">
-                        <div class="profile-avatar-initials" id="profile-avatar-el">DJM</div>
-                    </div>
-                    <div class="profile-header-info">
-                        <h2 class="profile-name-title" id="profile-display-name">Dharshan J M</h2>
-                        <div class="profile-meta-pills">
-                            <span class="status-badge status-submitted" id="profile-display-regno">963525104033</span>
-                            <span class="text-muted text-sm" id="profile-display-dept">Computer Science &amp; Engineering &bull; Year II &middot; Sem III (A)</span>
-                            <span class="acad-badge"><i class="fa-solid fa-circle-check fa-xs"></i> Continuing</span>
+                <!-- CLEAN PROFILE HEADER (NO BANNER) -->
+                <div class="card profile-header-clean">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;">
+                        <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;">
+                            <!-- Avatar with Photo Upload -->
+                            <div class="profile-avatar-wrapper" onclick="document.getElementById('avatar-file-input').click()" title="Click to upload profile photo">
+                                <div id="profile-avatar-container">
+                                    <div class="profile-avatar-initials" id="profile-avatar-el">DJM</div>
+                                </div>
+                                <div class="avatar-camera-btn" title="Change Photo">
+                                    <i class="fa-solid fa-camera"></i>
+                                </div>
+                                <input type="file" id="avatar-file-input" accept="image/*" style="display: none;" onchange="handleAvatarFileChange(event)">
+                            </div>
+                            
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                                    <h2 class="profile-name-title" id="profile-display-name" style="margin: 0;">Dharshan J M</h2>
+                                    <span class="status-badge status-submitted" id="profile-display-regno">963525104033</span>
+                                    <span class="acad-badge"><i class="fa-solid fa-circle-check fa-xs"></i> Continuing</span>
+                                </div>
+                                <div class="profile-meta-pills">
+                                    <span class="text-muted text-sm" id="profile-display-dept"><i class="fa-solid fa-graduation-cap me-1"></i> Computer Science &amp; Engineering &bull; Year II &middot; Sem III (A)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                            <button class="btn btn-secondary btn-sm" onclick="document.getElementById('avatar-file-input').click()">
+                                <i class="fa-solid fa-camera me-1"></i> Change Photo
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="openEditProfileModal()">
+                                <i class="fa-solid fa-pen-to-square me-1"></i> Edit Profile
+                            </button>
                         </div>
                     </div>
-                    <button class="btn btn-secondary btn-sm" style="position:absolute;right:1.5rem;bottom:1.5rem;background:rgba(255,255,255,0.92);" onclick="openEditProfileModal()">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit Profile
-                    </button>
                 </div>
 
                 <!-- TAB NAVIGATION -->
@@ -293,6 +337,15 @@
             </div>
             <form onsubmit="saveProfileChanges(event)">
                 <div class="modal-body">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding: 0.75rem; background: var(--bg-hover); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <div id="modal-avatar-preview" style="width: 54px; height: 54px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.2rem;">
+                            DJM
+                        </div>
+                        <div>
+                            <label class="form-label" style="margin-bottom: 0.25rem;">Profile Photo</label>
+                            <input type="file" id="modal-avatar-file" accept="image/*" class="form-control" style="font-size: 0.8rem; padding: 0.35rem 0.5rem;" onchange="handleModalAvatarPreview(event)">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
                         <input type="text" id="edit-name" class="form-control" required>
@@ -337,6 +390,82 @@
     <script>
         document.addEventListener("DOMContentLoaded", loadProfileData);
 
+        let pendingModalAvatarData = null;
+
+        function renderProfileAvatar(avatarUrl, name) {
+            const container = document.getElementById("profile-avatar-container");
+            if (!container) return;
+            if (avatarUrl) {
+                container.innerHTML = `<img id="profile-avatar-el" src="${avatarUrl}" class="profile-avatar-img" alt="Profile Picture">`;
+            } else {
+                const initials = (name || "Dharshan J M").split(" ").map(w => w[0]).slice(0, 3).join("").toUpperCase();
+                container.innerHTML = `<div class="profile-avatar-initials" id="profile-avatar-el">${initials}</div>`;
+            }
+        }
+
+        function handleAvatarFileChange(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showToast("Please select a valid image file", "error", "Invalid File");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                showToast("Image size must be less than 5MB", "warning", "File Too Large");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                updateUserAvatar(base64Data);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleModalAvatarPreview(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                showToast("Please select a valid image file", "error", "Invalid File");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                pendingModalAvatarData = e.target.result;
+                const previewEl = document.getElementById("modal-avatar-preview");
+                if (previewEl) {
+                    previewEl.innerHTML = `<img src="${pendingModalAvatarData}" style="width:100%;height:100%;object-fit:cover;">`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateUserAvatar(newAvatarUrl) {
+            const user = getCurrentUser();
+            if (!user) return;
+            user.avatar = newAvatarUrl;
+
+            // Update in Users store
+            const users = getStoreData("users") || [];
+            const updatedUsers = users.map(u => u.id === user.id ? { ...u, avatar: newAvatarUrl } : u);
+            setStoreData("users", updatedUsers);
+
+            // Update in Students store if matched
+            const students = getStoreData("students") || [];
+            const updatedStudents = students.map(s => (s.id === user.id || s.registerNo === user.registerNo) ? { ...s, avatar: newAvatarUrl } : s);
+            setStoreData("students", updatedStudents);
+
+            if (window.addAuditLog) {
+                window.addAuditLog("Profile Photo Updated", "Updated profile photo", "Success");
+            }
+
+            renderProfileAvatar(newAvatarUrl, user.name);
+            if (typeof renderSidebar === 'function') renderSidebar();
+            showToast("Profile photo updated successfully!", "success", "Photo Updated");
+        }
+
         function loadProfileData() {
             const user = getCurrentUser();
             if (!user) return;
@@ -347,10 +476,7 @@
             document.getElementById("profile-bio-text").innerText = user.bio ||
                 "Enthusiastic Computer Science student at Stella Mary's College of Engineering. Eager to contribute to meaningful projects and grow as a developer.";
 
-            if (user.avatar) {
-                const avatarEl = document.getElementById("profile-avatar-el");
-                if (avatarEl) avatarEl.outerHTML = `<img id="profile-avatar-el" src="${user.avatar}" class="profile-avatar-img" alt="Profile Picture">`;
-            }
+            renderProfileAvatar(user.avatar, user.name);
 
             const skillsContainer = document.getElementById("profile-skills-tags");
             const skills = user.skills || ["HTML5/CSS3", "JavaScript", "Python", "C", "Git"];
@@ -362,12 +488,23 @@
         function openEditProfileModal() {
             const user = getCurrentUser();
             if (!user) return;
+            pendingModalAvatarData = null;
             document.getElementById("edit-name").value  = user.name  || "Dharshan J M";
             document.getElementById("edit-email").value = user.email || "dharshan.cs25@stellamaryscoe.edu.in";
             document.getElementById("edit-dept").value  = user.department || "Computer Science and Engineering";
             document.getElementById("edit-year").value  = `${user.year || 'II'} - ${user.section || 'A'}`;
             document.getElementById("edit-bio").value   = user.bio   || "";
             document.getElementById("edit-skills").value = (user.skills || []).join(", ");
+            
+            const previewEl = document.getElementById("modal-avatar-preview");
+            if (previewEl) {
+                if (user.avatar) {
+                    previewEl.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;">`;
+                } else {
+                    const initials = (user.name || "DJM").split(" ").map(w => w[0]).slice(0, 3).join("").toUpperCase();
+                    previewEl.innerHTML = initials;
+                }
+            }
             openModal("edit-profile-modal");
         }
 
@@ -381,13 +518,25 @@
             user.bio        = document.getElementById("edit-bio").value;
             const skillsInput = document.getElementById("edit-skills").value;
             user.skills = skillsInput.split(",").map(s => s.trim()).filter(Boolean);
+
+            if (pendingModalAvatarData) {
+                user.avatar = pendingModalAvatarData;
+            }
+
             const updatedUsers = users.map(u => u.id === user.id ? user : u);
             setStoreData("users", updatedUsers);
-            addAuditLog("Profile Updated", "Updated student bio and skills", "Success");
+
+            const students = getStoreData("students") || [];
+            const updatedStudents = students.map(s => (s.id === user.id || s.registerNo === user.registerNo) ? { ...s, name: user.name, department: user.department, avatar: user.avatar } : s);
+            setStoreData("students", updatedStudents);
+
+            if (window.addAuditLog) {
+                addAuditLog("Profile Updated", "Updated student profile details", "Success");
+            }
             showToast("Profile details updated successfully!", "success");
             closeModal("edit-profile-modal");
             loadProfileData();
-            renderNavbar();
+            if (typeof renderSidebar === 'function') renderSidebar();
         }
 
         function switchProfileTab(tabName, btnElem) {

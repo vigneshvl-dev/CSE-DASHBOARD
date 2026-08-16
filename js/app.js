@@ -72,10 +72,13 @@ function renderSidebar() {
             <div class="sidebar-footer">
                 <div class="role-switcher-box">
                     <div class="role-avatar">${currentUser ? currentUser.name.charAt(0) : 'U'}</div>
-                    <div class="role-info">
-                        <div class="role-name">${currentUser ? currentUser.name : 'Demo User'}</div>
+                    <div class="role-info" style="flex: 1; min-width: 0;">
+                        <div class="role-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${currentUser ? currentUser.name : 'Demo User'}</div>
                         <div class="role-badge-sm"><i class="fa-solid fa-user-shield"></i> ${currentRole}</div>
                     </div>
+                    <button onclick="logoutUser()" title="Logout" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.4rem; border-radius: var(--radius-sm); transition: color var(--transition-fast);" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--text-muted)'">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
             </div>
         </aside>
@@ -133,42 +136,10 @@ function renderNavbar() {
             </div>
 
             <div class="navbar-right">
-                <div class="global-search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="navbar-search-input" placeholder="Search portfolio..." onkeydown="handleNavbarSearch(event)">
-                </div>
-
                 <a href="notifications.html" class="nav-icon-btn" title="Notifications">
                     <i class="fa-regular fa-bell"></i>
                     <span class="notification-badge" id="nav-notif-badge" style="display: none;"></span>
                 </a>
-
-                <div class="user-profile-menu" onclick="toggleRoleDropdownMenu(event)">
-                    <img src="${currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb'}" class="user-avatar-img" alt="User Avatar">
-                    <div class="user-menu-details">
-                        <span class="user-menu-name">${currentUser.name}</span>
-                        <span class="user-menu-role">${currentRole}</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-muted text-xs ms-1"></i>
-
-                    <!-- Role Quick Switcher Popup -->
-                    <div class="dropdown-menu-box" id="role-dropdown-menu">
-                        <div class="dropdown-header">Switch Portal Role</div>
-                        <button class="dropdown-item ${currentRole === 'Student' ? 'active' : ''}" onclick="switchRole('Student')">
-                            <i class="fa-solid fa-user-graduate me-2"></i> Student Role
-                        </button>
-                        <button class="dropdown-item ${currentRole === 'Faculty' ? 'active' : ''}" onclick="switchRole('Faculty')">
-                            <i class="fa-solid fa-chalkboard-user me-2"></i> Faculty Role
-                        </button>
-                        <button class="dropdown-item ${currentRole === 'HOD/Admin' ? 'active' : ''}" onclick="switchRole('HOD/Admin')">
-                            <i class="fa-solid fa-user-tie me-2"></i> HOD / Admin Role
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item text-danger" onclick="logoutUser()">
-                            <i class="fa-solid fa-right-from-bracket me-2"></i> Go to Login Page
-                        </button>
-                    </div>
-                </div>
             </div>
         </header>
     `;
