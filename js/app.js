@@ -18,12 +18,12 @@ function renderSidebar() {
     if (!sidebarContainer) return;
 
     const currentRole = getCurrentRole();
-    const currentPage = window.location.pathname.split("/").pop() || "student-dashboard.html";
+    const currentPage = window.location.pathname.split("/").pop() || "search.html";
 
     // Nav items list definition
     const navItems = [
-        { label: "Dashboard", icon: "fa-chart-pie", href: "student-dashboard.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "My Profile", icon: "fa-user-graduate", href: "student-profile.html", roles: ["Student", "Faculty", "HOD/Admin"] },
+        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Students", icon: "fa-users", href: "students.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
         { label: "Projects", icon: "fa-diagram-project", href: "projects.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Certificates", icon: "fa-certificate", href: "certificates.html", roles: ["Student", "Faculty", "HOD/Admin"] },
@@ -31,11 +31,9 @@ function renderSidebar() {
         { label: "Achievements", icon: "fa-trophy", href: "achievements.html", roles: ["Student", "Faculty", "HOD/Admin"] },
         { label: "Hyna Hub", icon: "fa-comments", href: "hyna-hub.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Verification", icon: "fa-circle-check", href: "verification.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
-        { label: "Search", icon: "fa-magnifying-glass", href: "search.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
         { label: "Reports", icon: "fa-file-lines", href: "reports.html", roles: ["Faculty", "HOD/Admin", "System Admin"] },
         { label: "Notifications", icon: "fa-bell", href: "notifications.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] },
-        { label: "Audit Logs", icon: "fa-clipboard-list", href: "audit-logs.html", roles: ["HOD/Admin", "System Admin"] },
-        { label: "Settings", icon: "fa-gear", href: "settings.html", roles: ["Student", "Faculty", "HOD/Admin", "System Admin"] }
+        { label: "Audit Logs", icon: "fa-clipboard-list", href: "audit-logs.html", roles: ["HOD/Admin", "System Admin"] }
     ];
 
     const currentUser = getCurrentUser();
@@ -49,7 +47,7 @@ function renderSidebar() {
     sidebarContainer.innerHTML = `
         <aside class="sidebar" id="app-sidebar">
             <div class="sidebar-header">
-                <a href="student-dashboard.html" class="sidebar-logo">
+                <a href="search.html" class="sidebar-logo">
                     <img src="stella_marys_emblem.png" class="sidebar-logo-img" alt="Stella Mary's Logo">
                     <div class="sidebar-brand-text">
                         <span>${brandTitle}</span>
@@ -61,7 +59,7 @@ function renderSidebar() {
             <div class="sidebar-nav">
                 <div class="nav-section-title">Main Menu</div>
                 ${navItems.filter(item => item.roles.includes(currentRole)).map(item => {
-                    const isActive = currentPage === item.href || (currentPage === "" && item.href === "student-dashboard.html");
+                    const isActive = currentPage === item.href || (currentPage === "" && item.href === "search.html");
                     return `
                         <a href="${item.href}" class="nav-item ${isActive ? 'active' : ''}">
                             <i class="fa-solid ${item.icon}"></i>
@@ -74,10 +72,13 @@ function renderSidebar() {
             <div class="sidebar-footer">
                 <div class="role-switcher-box">
                     <div class="role-avatar">${currentUser ? currentUser.name.charAt(0) : 'U'}</div>
-                    <div class="role-info">
-                        <div class="role-name">${currentUser ? currentUser.name : 'Demo User'}</div>
+                    <div class="role-info" style="flex: 1; min-width: 0;">
+                        <div class="role-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${currentUser ? currentUser.name : 'Demo User'}</div>
                         <div class="role-badge-sm"><i class="fa-solid fa-user-shield"></i> ${currentRole}</div>
                     </div>
+                    <button onclick="logoutUser()" title="Logout" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0.4rem; border-radius: var(--radius-sm); transition: color var(--transition-fast);" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--text-muted)'">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
             </div>
         </aside>
@@ -135,42 +136,10 @@ function renderNavbar() {
             </div>
 
             <div class="navbar-right">
-                <div class="global-search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="navbar-search-input" placeholder="Search portfolio..." onkeydown="handleNavbarSearch(event)">
-                </div>
-
                 <a href="notifications.html" class="nav-icon-btn" title="Notifications">
                     <i class="fa-regular fa-bell"></i>
                     <span class="notification-badge" id="nav-notif-badge" style="display: none;"></span>
                 </a>
-
-                <div class="user-profile-menu" onclick="toggleRoleDropdownMenu(event)">
-                    <img src="${currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb'}" class="user-avatar-img" alt="User Avatar">
-                    <div class="user-menu-details">
-                        <span class="user-menu-name">${currentUser.name}</span>
-                        <span class="user-menu-role">${currentRole}</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-muted text-xs ms-1"></i>
-
-                    <!-- Role Quick Switcher Popup -->
-                    <div class="dropdown-menu-box" id="role-dropdown-menu">
-                        <div class="dropdown-header">Switch Portal Role</div>
-                        <button class="dropdown-item ${currentRole === 'Student' ? 'active' : ''}" onclick="switchRole('Student')">
-                            <i class="fa-solid fa-user-graduate me-2"></i> Student Role
-                        </button>
-                        <button class="dropdown-item ${currentRole === 'Faculty' ? 'active' : ''}" onclick="switchRole('Faculty')">
-                            <i class="fa-solid fa-chalkboard-user me-2"></i> Faculty Role
-                        </button>
-                        <button class="dropdown-item ${currentRole === 'HOD/Admin' ? 'active' : ''}" onclick="switchRole('HOD/Admin')">
-                            <i class="fa-solid fa-user-tie me-2"></i> HOD / Admin Role
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item text-danger" onclick="logoutUser()">
-                            <i class="fa-solid fa-right-from-bracket me-2"></i> Go to Login Page
-                        </button>
-                    </div>
-                </div>
             </div>
         </header>
     `;
